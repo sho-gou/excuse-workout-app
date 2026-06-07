@@ -206,4 +206,4 @@
 そのため、**MVPおよび初期リリース段階ではRailsの標準機能（Hotwire/Turbo）とシンプルな条件分岐（if文）で画面表示を構築**し、アプリがしっかりとユーザーに受け入れられ、「サボった日の接点維持による復帰率向上」という技術的・サービス的な検証を済ませた後の発展形として、本リリース以降にフロントエンドのReact化を検討する方針とします。
 
 ### 11. 画面遷移図URL
-[Figma画面遷移図はこちら](https://www.figma.com/design/QlVvZpR0o3hc2DtuEZgPl8/%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3%E3%80%80%E3%81%82%E3%81%99%E3%81%BB%E3%82%93?node-id=0-1&t=Pc8zY5fdRXMszNin-1)
+[Figma画面遷移図はこちら](https://www.figma.com/design/QlVvZpR0o3hc2DtuEZgPl8/%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3%E3%80%80%E3%81%82%E3%81%99%E3%81%BB%E3%82%93?node-id=0-1&t=vArVDzK2TL3OeXzA-1)
