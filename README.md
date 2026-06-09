@@ -207,3 +207,6 @@
 
 ### 11. 画面遷移図URL
 [Figma画面遷移図はこちら](https://www.figma.com/design/QlVvZpR0o3hc2DtuEZgPl8/%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3%E3%80%80%E3%81%82%E3%81%99%E3%81%BB%E3%82%93?node-id=0-1&t=vArVDzK2TL3OeXzA-1)
+
+### 12. ER図リンク
+[dbdiagram_ER図はこちら](https://dbdiagram.io/d/6a2801608eb8ca4bfe87d0f5)
