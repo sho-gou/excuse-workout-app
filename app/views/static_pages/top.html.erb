@@ -1,0 +1,24 @@
+<div class="flex flex-col items-center justify-center min-h-screen bg-gray-50">
+  <h1 class="text-4xl font-bold mb-8 text-gray-800">明日から本気出す</h1>
+
+  <%= form_with url: "#", local: true, class: "flex flex-col gap-4 w-64" do |f| %>
+    <div>
+      <%= f.label :email, "Email", class: "block" %>
+      <%= f.email_field :email, class: "border p-1 w-full rounded-lg" %>
+    </div>
+
+    <div>
+      <%= f.label :password, "password", class: "block" %>
+      <%= f.password_field :password, class: "border p-1 w-full rounded-lg" %>
+    </div>
+
+    <%= f.submit "signin", class: "bg-blue-500 text-white p-2 rounded" %>
+  <% end %>
+
+  <div class="mt-8 flex gap-4 text-sm text-gray-500">
+    <%= link_to "利用規約", "#" %>
+    <%= link_to "プライバシーポリシー", "#" %>
+    <%= link_to "お問い合わせ", "#" %>
+  </div>
+</div>
+
