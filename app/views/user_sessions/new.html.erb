@@ -1,0 +1,17 @@
+<h1>明日から本気出す</h1>
+
+<%= form_with url: "/login", method: :post, local: true do |f| %>
+  <div>
+    <%= f.label :email, "Email" %>
+    <%= f.email_field :email %>
+  </div>
+
+  <div>
+    <%= f.label :password, "password" %>
+    <%= f.password_field :password %>
+  </div>
+
+  <div>
+    <%= f.submit "signin" %>
+  </div>
+<% end %>
