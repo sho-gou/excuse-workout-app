@@ -1,4 +1,14 @@
 <div class="flex flex-col items-center justify-center min-h-screen bg-gray-50">
+  <nav class="absolute top-4 right-4">
+    <% if logged_in? %>
+      <span class="text-gray-600 mr-4">ログイン中です</span>
+      <%= link_to "ログアウト", logout_path, data: { turbo_method: :delete }, class: "text-blue-500" %>
+    <% else %>
+      <%= link_to "ログイン", login_path, class: "text-blue-500 mr-4" %>
+      <%= link_to "新規登録", signup_path, class: "text-blue-500" %>
+    <% end %>
+  </nav>
+  
   <h1 class="text-4xl font-bold mb-8 text-gray-800">明日から本気出す</h1>
 
   <%= form_with url: "#", local: true, class: "flex flex-col gap-4 w-64" do |f| %>
