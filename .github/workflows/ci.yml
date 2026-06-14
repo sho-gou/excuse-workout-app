@@ -38,7 +38,7 @@ jobs:
       - name: Lint code for consistent style
         run: bin/rubocop -f github
 
-  test:
+    test:
     runs-on: ubuntu-latest
 
     services:
@@ -57,7 +57,7 @@ jobs:
 
     steps:
       - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl default-mysql-client libjemalloc2 libvips
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl default-mysql-client libjemalloc2 libvips netcat-openbsd
 
       - name: Checkout code
         uses: actions/checkout@v4
@@ -77,11 +77,16 @@ jobs:
         run: |
           echo "DB_HOST=$DB_HOST"
 
+          echo "=== Port Check ==="
           nc -zv 127.0.0.1 3306 || true
 
+          echo "=== MySQL Ping ==="
           mysqladmin ping -h127.0.0.1 -uroot -ppassword || true
 
+          echo "=== Database Prepare ==="
           bundle exec rails db:prepare
+
+          echo "=== Run Tests ==="
           bundle exec rails test test:system
 
       - name: Keep screenshots from failed system tests
