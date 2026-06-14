@@ -8,39 +8,32 @@ on:
 jobs:
   scan_ruby:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
           bundler-cache: true
-
       - name: Scan for common Rails security vulnerabilities using static analysis
         run: bin/brakeman --no-pager --except EOLRails
 
   lint:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
           bundler-cache: true
-
       - name: Lint code for consistent style
         run: bin/rubocop -f github
 
-    test:
+  test:
     runs-on: ubuntu-latest
-
     services:
       mysql:
         image: mysql:8.0
@@ -54,20 +47,16 @@ jobs:
           --health-interval=10s
           --health-timeout=5s
           --health-retries=10
-
     steps:
       - name: Install packages
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl default-mysql-client libjemalloc2 libvips netcat-openbsd
-
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
           bundler-cache: true
-
       - name: Run tests
         env:
           RAILS_ENV: test
@@ -76,19 +65,14 @@ jobs:
           DATABASE_URL: mysql2://root:password@127.0.0.1:3306/excuse_workout_app_test
         run: |
           echo "DB_HOST=$DB_HOST"
-
           echo "=== Port Check ==="
           nc -zv 127.0.0.1 3306 || true
-
           echo "=== MySQL Ping ==="
           mysqladmin ping -h127.0.0.1 -uroot -ppassword || true
-
           echo "=== Database Prepare ==="
           bundle exec rails db:prepare
-
           echo "=== Run Tests ==="
           bundle exec rails test test:system
-
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v4
         if: failure()
