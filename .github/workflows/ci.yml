@@ -71,22 +71,15 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test
-          DB_HOST: mysql
+          DB_HOST: 127.0.0.1
           MYSQL_PASSWORD: password
-          DATABASE_URL: mysql2://root:password@mysql:3306/excuse_workout_app_test
+          DATABASE_URL: mysql2://root:password@127.0.0.1:3306/excuse_workout_app_test
         run: |
           echo "DB_HOST=$DB_HOST"
 
-          getent hosts mysql || true
+          nc -zv 127.0.0.1 3306 || true
 
-          mysqladmin ping -h"$DB_HOST" -uroot -ppassword || true
-
-          echo "Waiting for MySQL..."
-          while ! mysqladmin ping -h"$DB_HOST" -uroot -ppassword --silent; do
-            sleep 1
-          done
-
-          echo "MySQL is ready!"
+          mysqladmin ping -h127.0.0.1 -uroot -ppassword || true
 
           bundle exec rails db:prepare
           bundle exec rails test test:system
