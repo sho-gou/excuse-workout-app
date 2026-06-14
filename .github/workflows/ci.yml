@@ -71,11 +71,14 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test
-          DB_HOST: 127.0.0.1
-          DATABASE_URL: mysql2://127.0.0.1:3306
-          # REDIS_URL: redis://localhost:6379/0
-        run: bin/rails db:test:prepare test test:system
-
+          DB_HOST: mysql
+          DATABASE_URL: mysql2://root@mysql:3306/excuse_workout_app_test
+        run: |
+          # データベースの準備
+          bin/rails db:prepare
+          # テストの実行
+          bin/rails test test:system
+          
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v4
         if: failure()
