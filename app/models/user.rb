@@ -1,8 +1,11 @@
 class User < ApplicationRecord
-    # パスワード暗号化、確認用フィールドの照合
-    authenticates_with_sorcery!
+  # パスワード暗号化、確認用フィールドの照合
+  authenticates_with_sorcery!
 
-    # バリデーションの設定
+  # ユーザーはプロフィールを１つだけもつ
+  has_one :profile, dependent: :destroy
+
+  # バリデーションの設定
   validates :password, length: { minimum: 3 }, if: -> { new_record? || changes[:crypted_password] }
   validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }
   validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }

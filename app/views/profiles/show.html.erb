@@ -1,0 +1,17 @@
+<div class="flex flex-col items-center justify-center min-h-screen bg-gray-50">
+  <div class="bg-white p-8 rounded-lg shadow-md w-80">
+    <h1 class="text-2xl font-bold mb-4">マイプロフィール</h1>
+    
+    <div class="mb-4">
+      <p class="text-sm text-gray-500">目標</p>
+      <p class="text-lg"><%= @profile.fitness_goal %></p>
+    </div>
+    
+    <div class="mb-4">
+      <p class="text-sm text-gray-500">やる事</p>
+      <p class="text-lg"><%= @profile.tiny_menu %></p>
+    </div>
+
+    <%= link_to "プロフィールを編集する", edit_profile_path, class: "text-blue-500 hover:underline" %>
+  </div>
+</div>

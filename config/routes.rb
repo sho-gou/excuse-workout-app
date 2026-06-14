@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   
   # resources を使うと自動的に login_path などが生成
-  resources :user_sessions, only: [:new, :create, :destroy]
+  resources :user_sessions, only: %i[new create destroy]
 
   # ログイン画面を表示するルート
   get 'login', to: 'user_sessions#new'
@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   post 'login', to: 'user_sessions#create'
   # ログアウト用のルート
   delete 'logout', to: 'user_sessions#destroy'
+
+  # プロフィール編集用
+  resource :profile, only: %i[show edit update]
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
