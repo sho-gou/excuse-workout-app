@@ -10,10 +10,10 @@ class UsersController < ApplicationController
     # データが保存できたかチェック
     if @user.save
       # 成功したらトップページへリダイレクト
-      redirect_to root_path, notice: 'ユーザー登録が完了しました'
+      redirect_to root_path, notice: "ユーザー登録が完了しました"
     else
       # 失敗したら登録画面を再表示（エラーメッセージを出す）
-      flash.now[:alert] = '登録に失敗しました'
+      flash.now[:alert] = "登録に失敗しました"
       render :new, status: :unprocessable_entity
     end
   end
@@ -25,5 +25,4 @@ class UsersController < ApplicationController
     # :email, :password, :password_confirmation だけを受け取る
     params.require(:user).permit(:email, :password, :password_confirmation)
   end
-
 end
