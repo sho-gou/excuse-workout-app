@@ -3,8 +3,8 @@ default: &default
   encoding: utf8mb4
   pool: 5
   username: root
-  password: password
-  host: db
+  password: <%= ENV["MYSQL_PASSWORD"] %>
+  host: <%= ENV.fetch("DB_HOST", "db") %>
 
 development:
   <<: *default

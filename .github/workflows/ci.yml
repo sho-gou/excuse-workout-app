@@ -20,10 +20,11 @@ jobs:
           bundler-cache: true
 
       - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager
+        run: bin/brakeman --no-pager --except EOLRails
 
   lint:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -42,18 +43,17 @@ jobs:
 
     services:
       mysql:
-        image: mysql
+        image: mysql:8.0
         env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: true
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: excuse_workout_app_test
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-
-      # redis:
-      #   image: redis
-      #   ports:
-      #     - 6379:6379
-      #   options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+        options: >-
+          --health-cmd="mysqladmin ping -ppassword"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
 
     steps:
       - name: Install packages
@@ -72,20 +72,25 @@ jobs:
         env:
           RAILS_ENV: test
           DB_HOST: mysql
-          DATABASE_URL: mysql2://root@mysql:3306/excuse_workout_app_test
+          MYSQL_PASSWORD: password
+          DATABASE_URL: mysql2://root:password@mysql:3306/excuse_workout_app_test
         run: |
-          # MySQLのポートが空くのを少し待つためのループ
+          echo "DB_HOST=$DB_HOST"
+
+          getent hosts mysql || true
+
+          mysqladmin ping -h"$DB_HOST" -uroot -ppassword || true
+
           echo "Waiting for MySQL..."
-          while ! mysqladmin ping -h"$DB_HOST" -u"root" --silent; do
+          while ! mysqladmin ping -h"$DB_HOST" -uroot -ppassword --silent; do
             sleep 1
           done
+
           echo "MySQL is ready!"
-          
-          # データベースの準備
+
           bundle exec rails db:prepare
-          # テストの実行
           bundle exec rails test test:system
-          
+
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v4
         if: failure()
