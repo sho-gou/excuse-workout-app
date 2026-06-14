@@ -74,10 +74,17 @@ jobs:
           DB_HOST: mysql
           DATABASE_URL: mysql2://root@mysql:3306/excuse_workout_app_test
         run: |
+          # MySQLのポートが空くのを少し待つためのループ
+          echo "Waiting for MySQL..."
+          while ! mysqladmin ping -h"$DB_HOST" -u"root" --silent; do
+            sleep 1
+          done
+          echo "MySQL is ready!"
+          
           # データベースの準備
-          bin/rails db:prepare
+          bundle exec rails db:prepare
           # テストの実行
-          bin/rails test test:system
+          bundle exec rails test test:system
           
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v4
