@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_06_14_102731) do
+ActiveRecord::Schema[7.2].define(version: 2026_06_16_125030) do
+  create_table "excuses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "icon_image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.text "fitness_goal"
@@ -18,6 +25,17 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_14_102731) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_profiles_on_user_id"
+  end
+
+  create_table "survival_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "excuse_id", null: false
+    t.integer "report_status"
+    t.date "reported_on"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["excuse_id"], name: "index_survival_logs_on_excuse_id"
+    t.index ["user_id"], name: "index_survival_logs_on_user_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -30,4 +48,6 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_14_102731) do
   end
 
   add_foreign_key "profiles", "users"
+  add_foreign_key "survival_logs", "excuses"
+  add_foreign_key "survival_logs", "users"
 end
