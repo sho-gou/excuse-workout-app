@@ -1,13 +1,10 @@
 require "test_helper"
 
 class StaticPagesControllerTest < ActionDispatch::IntegrationTest
-  # ログインヘルパーを読み込む（Deviseを使っている場合）
-  include Devise::Test::IntegrationHelpers
-
   setup do
-    # テスト用のユーザー（fixtures/users.yml にあるもの）を取得してログイン
     @user = users(:one)
-    sign_in @user
+    # login_userを使わず、直接ログインリクエストを送る（これでpageエラーは消えます）
+    post login_path, params: { email: @user.email, password: "password" }
   end
 
   test "should get top" do
