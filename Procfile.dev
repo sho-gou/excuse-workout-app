@@ -1,3 +1,2 @@
-web: env RUBY_DEBUG_OPEN=true bin/rails server -b 0.0.0.0
-js: yarn build --watch
-css: yarn build:css --watch
+web: docker-compose exec web bin/rails server -b 0.0.0.0
+css: docker-compose exec web yarn build:css --watch

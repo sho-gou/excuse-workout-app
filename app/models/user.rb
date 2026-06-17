@@ -4,6 +4,8 @@ class User < ApplicationRecord
 
   # ユーザーはプロフィールを１つだけもつ
   has_one :profile, dependent: :destroy
+  # ユーザーは複数の生存報告をもつ
+  has_many :survival_logs, dependent: :destroy
 
   # バリデーションの設定
   validates :password, length: { minimum: 3 }, if: -> { new_record? || changes[:crypted_password] }

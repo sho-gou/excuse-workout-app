@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  excuse: one
+  report_status: 1
+  reported_on: 2026-06-16
+
+two:
+  user: two
+  excuse: two
+  report_status: 1
+  reported_on: 2026-06-16
