@@ -7,3 +7,12 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+Excuse.create!([
+  { name: "飲み会" },
+  { name: "急な残業" },
+  { name: "腰痛" },
+  { name: "接待" },
+  { name: "納期直前" },
+  { name: "気力ゼロ" }
+])

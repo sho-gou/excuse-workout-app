@@ -1,0 +1,58 @@
+<h1>本日の生存報告</h1>
+
+<div style="display: flex; justify-content: center; align-items: flex-start; gap: 40px; margin-top: 50px;">
+  
+  <div style="width: 250px;">
+    <%= button_to "実行！", survival_logs_path(survival_log: { report_status: 1 }), 
+        method: :post, 
+        style: "width: 100%; padding: 40px 0; font-size: 24px; font-weight: bold; background-color: #2dd4bf; color: white; border: none; border-radius: 12px; cursor: pointer;" %>
+  </div>
+
+  <div style="width: 250px;">
+    <%= form_with model: @survival_log, url: survival_logs_path, local: true do |f| %>
+      <%= f.hidden_field :report_status, value: -1 %>
+      
+      <%= f.submit "サボる", 
+          style: "width: 100%; padding: 40px 0; font-size: 24px; font-weight: bold; background-color: #f87171; color: white; border: none; border-radius: 12px; cursor: pointer;" %>
+
+      <div style="margin-top: 15px; border: 1px solid #ccc; padding: 15px; border-radius: 8px;">
+        <% Excuse.all.each do |excuse| %>
+          <div style="margin-bottom: 8px;">
+            <%= f.radio_button :excuse_id, excuse.id %>
+            <%= f.label :excuse_id, excuse.name, value: excuse.id, style: "font-size: 16px;" %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<hr style="margin: 40px 0;">
+
+<h3>過去の生存ログ</h3>
+<table border="1" style="width: 100%; border-collapse: collapse;">
+  <tr>
+    <th>日付</th>
+    <th>ステータス</th>
+    <th>やること</th>
+    <th>言い訳</th>
+  </tr>
+  <% @survival_logs.each do |log| %>
+    <tr>
+      <td><%= log.reported_on %></td>
+      <td><%= log.report_status == 1 ? "実行！" : "サボる" %></td>
+      
+      <td>
+        <% if log.report_status == 1 %>
+          <%# 実行！の時は目標を表示（なければ現在の目標、それもなければ-） %>
+          <%= log.todo.presence || current_user.profile&.fitness_goal || "-" %>
+        <% else %>
+          <%# サボる時は常に - を表示 %>
+          -
+        <% end %>
+      </td>
+
+      <td><%= log.excuse&.name || "-" %></td>
+    </tr>
+  <% end %>
+</table>

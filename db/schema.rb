@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_06_16_125030) do
+ActiveRecord::Schema[7.2].define(version: 2026_06_17_112440) do
   create_table "excuses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "icon_image"
@@ -29,11 +29,12 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_16_125030) do
 
   create_table "survival_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "excuse_id", null: false
+    t.bigint "excuse_id"
     t.integer "report_status"
     t.date "reported_on"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "todo"
     t.index ["excuse_id"], name: "index_survival_logs_on_excuse_id"
     t.index ["user_id"], name: "index_survival_logs_on_user_id"
   end

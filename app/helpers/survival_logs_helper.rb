@@ -1,0 +1,2 @@
+module SurvivalLogsHelper
+end
