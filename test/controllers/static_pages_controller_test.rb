@@ -6,7 +6,7 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     # テスト用のユーザー（fixtures/users.yml にあるもの）を取得してログイン
-    @user = users(:one) 
+    @user = users(:one)
     sign_in @user
   end
 
