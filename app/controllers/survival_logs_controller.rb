@@ -23,7 +23,7 @@ class SurvivalLogsController < ApplicationController
 
     # 【追加】もし「実行！」ならプロフィールから目標を保存
     # ※ report_status は、フォームから送られてくるパラメータ名に合わせてください
-    if @survival_log.report_status == "実行！" 
+    if @survival_log.report_status == "実行！"
       @survival_log.todo = current_user.profile.fitness_goal
     end
 
