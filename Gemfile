@@ -58,3 +58,5 @@ group :test do
   gem "selenium-webdriver"
 end
 gem "sorcery"
+
+gem "simple_calendar", "~> 2.0"

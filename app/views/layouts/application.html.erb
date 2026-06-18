@@ -19,13 +19,16 @@
 
   <body>
     <header class="bg-white shadow-sm border-b p-4">
-      <div class="flex items-center gap-x-6">
+      <div class="flex items-center gap-x-4">
         <% if logged_in? %>
-          <div class="text-sm text-gray-500 mr-2">ログイン中</div>
+          <div class="text-xs text-gray-400 mr-2">ログイン中</div>
           
+          <%# ナビゲーションリンク %>
           <%= link_to "生存報告", root_path, class: "text-teal-600 font-bold hover:underline px-2" %>
+          <%= link_to "カレンダー", calendar_survival_logs_path, class: "text-orange-600 font-bold hover:underline px-2" %>
           <%= link_to "プロフィール", edit_profile_path, class: "text-blue-600 font-bold hover:underline px-2" %>
           
+          <%# ログアウトボタン（ml-autoで右端に寄せます） %>
           <%= link_to "ログアウト", logout_path, data: { turbo_method: :delete }, 
                       class: "px-4 py-1 border border-red-500 text-red-500 rounded-full hover:bg-red-500 hover:text-white transition ml-auto" %>
         <% else %>
