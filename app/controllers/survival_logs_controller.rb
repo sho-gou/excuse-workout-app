@@ -23,10 +23,10 @@ class SurvivalLogsController < ApplicationController
 
     # ログオブジェクトの構築
     @survival_log = current_user.survival_logs.build(survival_log_params)
-    
+
     # 日付のセット（フォームから受け取ったもの、なければ今日）
     target_date = params[:survival_log][:reported_on].present? ? Date.parse(params[:survival_log][:reported_on]) : Date.today
-    
+
     # 1日1回の重複投稿チェック
     if current_user.survival_logs.where(reported_on: target_date).exists?
       redirect_to survival_logs_path, alert: "#{target_date}の報告は既に完了しています。"

@@ -19,7 +19,7 @@ Rails.application.routes.draw do
 
   # アプリケーションのトップページを生存報告一覧に設定
   root "survival_logs#index"
-  
+
   # Rails標準のヘルスチェック・PWA設定
   get "up" => "rails/health#show", as: :rails_health_check
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
