@@ -1,26 +1,40 @@
-<div class="flex flex-col items-center justify-center min-h-screen bg-gray-50">
-  <h1 class="text-4xl font-bold mb-8 text-gray-800">ユーザー登録</h1>
+<div class="flex flex-col items-center justify-center min-h-screen bg-gray-900 p-4">
+  <div class="w-full max-w-sm bg-white p-8 shadow-2xl border-t-8 border-gray-900">
+    <h1 class="text-3xl font-bold mb-2 text-gray-900 text-center tracking-tighter">新規登録</h1>
+    <p class="text-xs text-gray-500 text-center mb-8 uppercase tracking-widest">明日への第一歩</p>
 
-  <%= form_with model: @user, url: users_path, local: true, class: "flex flex-col gap-4 w-64 bg-white p-8 rounded-lg shadow-md" do |f| %>
-    <div>
-      <%= f.label :email, "Email", class: "block text-sm font-medium text-gray-700" %>
-      <%= f.email_field :email, class: "border p-2 w-full rounded-lg focus:ring-2 focus:ring-blue-400 outline-none" %>
+    <%= form_with model: @user, local: true, class: "flex flex-col gap-6" do |f| %>
+      <%# エラーメッセージ表示（Railsの標準機能） %>
+      <% if @user.errors.any? %>
+        <div class="bg-red-50 p-4 text-red-700 text-xs">
+          <ul>
+            <% @user.errors.full_messages.each do |msg| %>
+              <li>・<%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div>
+        <%= f.label :email, "MAIL", class: "block text-[10px] font-bold text-gray-500 tracking-widest" %>
+        <%= f.email_field :email, placeholder: "example@mail.com", class: "mt-1 border-b-2 border-gray-300 py-2 w-full focus:border-gray-900 outline-none transition" %>
+      </div>
+
+      <div>
+        <%= f.label :password, "PASSWORD", class: "block text-[10px] font-bold text-gray-500 tracking-widest" %>
+        <%= f.password_field :password, placeholder: "••••••••", class: "mt-1 border-b-2 border-gray-300 py-2 w-full focus:border-gray-900 outline-none transition" %>
+      </div>
+      
+      <div>
+        <%= f.label :password_confirmation, "PASSWORD CONFIRM", class: "block text-[10px] font-bold text-gray-500 tracking-widest" %>
+        <%= f.password_field :password_confirmation, placeholder: "••••••••", class: "mt-1 border-b-2 border-gray-300 py-2 w-full focus:border-gray-900 outline-none transition" %>
+      </div>
+
+      <%= f.submit "登録する", class: "mt-2 bg-gray-900 hover:bg-black text-white font-bold py-3 transition duration-300 cursor-pointer w-full tracking-widest" %>
+    <% end %>
+
+    <div class="mt-6 text-center text-xs text-gray-500">
+      既にアカウントをお持ちの方は <%= link_to "ログイン", root_path, class: "text-gray-900 font-bold underline underline-offset-4" %>
     </div>
-
-    <div>
-      <%= f.label :password, "Password", class: "block text-sm font-medium text-gray-700" %>
-      <%= f.password_field :password, class: "border p-2 w-full rounded-lg focus:ring-2 focus:ring-blue-400 outline-none" %>
-    </div>
-
-    <div>
-      <%= f.label :password_confirmation, "Password Confirmation", class: "block text-sm font-medium text-gray-700" %>
-      <%= f.password_field :password_confirmation, class: "border p-2 w-full rounded-lg focus:ring-2 focus:ring-blue-400 outline-none" %>
-    </div>
-
-    <%= f.submit "登録する", class: "bg-blue-500 text-white p-2 rounded-lg cursor-pointer hover:bg-blue-600 transition-colors" %>
-  <% end %>
-
-  <div class="mt-8 text-sm text-gray-500">
-    すでにアカウントをお持ちですか？ <%= link_to "ログイン", login_path, class: "text-blue-500 hover:underline" %>
   </div>
 </div>

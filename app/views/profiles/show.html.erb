@@ -1,17 +1,30 @@
-<div class="flex flex-col items-center justify-center min-h-screen bg-gray-50">
-  <div class="bg-white p-8 rounded-lg shadow-md w-80">
-    <h1 class="text-2xl font-bold mb-4">マイプロフィール</h1>
-    
-    <div class="mb-4">
-      <p class="text-sm text-gray-500">目標</p>
-      <p class="text-lg"><%= @profile.fitness_goal %></p>
-    </div>
-    
-    <div class="mb-4">
-      <p class="text-sm text-gray-500">やる事</p>
-      <p class="text-lg"><%= @profile.tiny_menu %></p>
-    </div>
+<div class="max-w-md mx-auto py-10 px-4">
+  <%# ヘッダー %>
+  <div class="mb-8 border-l-8 border-gray-900 pl-6">
+    <h1 class="text-3xl font-black tracking-tighter text-gray-900 uppercase">AGENT STATUS</h1>
+    <p class="text-xs font-bold text-gray-500 tracking-widest mt-1">現在の活動状況</p>
+  </div>
 
-    <%= link_to "プロフィールを編集する", edit_profile_path, class: "text-blue-500 hover:underline" %>
+  <%# ステータス表示エリア %>
+  <div class="bg-white border-2 border-gray-900 shadow-xl">
+    <div class="p-8 border-b-2 border-gray-900">
+      <label class="block text-[10px] font-black text-gray-400 tracking-widest uppercase mb-1">Primary Goal</label>
+      <div class="text-xl font-black text-gray-900 tracking-tight">
+        <%= @profile.fitness_goal.presence || "未設定" %>
+      </div>
+    </div>
+    
+    <div class="p-8">
+      <label class="block text-[10px] font-black text-gray-400 tracking-widest uppercase mb-1">Daily Task</label>
+      <div class="text-xl font-black text-gray-900 tracking-tight">
+        <%= @profile.tiny_menu.presence || "未設定" %>
+      </div>
+    </div>
+  </div>
+
+  <%# 操作ボタンエリア %>
+  <div class="mt-8 flex gap-4">
+    <%= link_to "編集", edit_profile_path, class: "flex-1 py-4 text-center text-[10px] font-black text-white bg-gray-900 hover:bg-black transition tracking-widest uppercase" %>
+    <%= link_to "一覧へ", root_path, class: "flex-1 py-4 text-center text-[10px] font-black text-gray-900 border-2 border-gray-900 hover:bg-gray-100 transition tracking-widest uppercase" %>
   </div>
 </div>
