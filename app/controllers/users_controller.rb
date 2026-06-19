@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  skip_before_action :require_login, only: %i[new create]
+
   # 新規登録画面を表示するアクション
   def new
     @user = User.new

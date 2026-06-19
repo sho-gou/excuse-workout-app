@@ -1,40 +1,41 @@
-<%# ページ全体を中央寄せするための親コンテナ %>
-<div class="w-full min-h-screen bg-gray-50 flex flex-col items-center py-10">
-  
-  <h1 class="text-4xl font-extrabold text-gray-900 mb-10">言い訳カレンダー</h1>
-
-  <%# カレンダーを中央に配置するラッパー %>
-  <div class="w-full flex justify-center items-center">
+<div class="w-full py-10 px-4">
+  <div class="max-w-5xl mx-auto">
     
-    <%# カレンダーの背景と角丸デザインを指定 %>
-    <div class="bg-white shadow-2xl rounded-3xl overflow-hidden p-6 w-full max-w-5xl">
-      <div class="flex justify-center">
-        <%# simple_calendar を使用して月間カレンダーを生成 %>
-        <%= month_calendar events: @survival_logs, table_class: "w-full border-collapse" do |date, logs| %>
+    <%# タイトルエリア %>
+    <div class="mb-8 border-l-8 border-gray-900 pl-6">
+      <h1 class="text-3xl font-black tracking-tighter text-gray-900 uppercase">MISSION CALENDAR</h1>
+      <p class="text-xs font-bold text-gray-500 tracking-widest mt-1">月間生存戦績</p>
+    </div>
+
+    <%# カレンダー本体 %>
+    <div class="w-full bg-white border-2 border-gray-900 shadow-xl overflow-hidden">
+      <%= month_calendar events: @survival_logs do |date, logs| %>
+        
+        <div class="h-28 flex flex-col p-2 border border-gray-200 <%= date == Date.today ? 'bg-gray-50' : '' %>">
+          <%= link_to date.day, survival_logs_path(reported_on: date), 
+              class: "text-sm font-black text-gray-400 hover:text-gray-900 transition-colors" %>
           
-          <%# カレンダーの各マスのスタイル設定 %>
-          <div class="aspect-square flex flex-col p-2 border border-gray-100">
-            <%# 日付を表示。クリックするとその日付の新規作成画面へ遷移（報告日パラメータ付き） %>
-            <%= link_to date.day, survival_logs_path(reported_on: date), class: "text-lg font-bold text-gray-700 hover:text-blue-600 transition-colors" %>
-            
-            <%# ログがある場合に表示するリストエリア %>
-            <div class="w-full flex flex-col space-y-1 mt-2 overflow-y-auto flex-grow">
-              <% logs.each do |log| %>
-                <%# 実行なら青系、サボりなら赤系で背景色を切り替え %>
-                <div class="flex flex-col text-[10px] px-2 py-1 rounded <%= log.report_status.to_i == 1 ? 'bg-teal-100 text-teal-900' : 'bg-red-100 text-red-900' %>">
-                  <%# 報告ステータスのラベル表示 %>
-                  <span class="font-bold"><%= log.report_status.to_i == 1 ? "☑️ 実行" : "❌ サボる" %></span>
-                  
-                  <%# 言い訳が設定されている場合のみ、その内容を表示 %>
-                  <% if log.excuse.present? %>
-                    <span class="truncate mt-0.5 text-[9px] opacity-80 italic"><%= log.excuse.name %></span>
-                  <% end %>
+          <div class="w-full flex flex-col space-y-1 mt-2">
+            <% logs.each do |log| %>
+              <div class="px-1 py-0.5 text-[9px] font-bold tracking-tighter uppercase text-center
+                          <%= log.report_status.to_i == 1 ? 'bg-gray-900 text-white' : 'border border-gray-900 text-gray-900' %>">
+                <%= log.report_status.to_i == 1 ? "実行" : "断念" %>
+              </div>
+              
+              <% if log.excuse.present? %>
+                <div class="text-[8px] text-gray-500 truncate italic tracking-tight text-center">
+                  <%= log.excuse.name %>
                 </div>
               <% end %>
-            </div>
+            <% end %>
           </div>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
+    </div>
+
+    <%# 戻るリンク %>
+    <div class="mt-8 text-center">
+      <%= link_to "ログ一覧へ戻る", survival_logs_path, class: "text-[10px] font-bold text-gray-400 hover:text-gray-900 underline uppercase tracking-widest" %>
     </div>
   </div>
 </div>

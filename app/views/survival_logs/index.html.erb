@@ -1,42 +1,40 @@
-<div class="max-w-xl mx-auto p-6 bg-white rounded-3xl shadow-xl mt-10">
-  <h1 class="text-3xl font-bold text-gray-800 mb-2 text-center">本日の生存報告</h1>
-  <p class="text-center text-gray-500 mb-8">対象日: <%= @selected_date %></p>
+<div class="max-w-md mx-auto py-10 px-4">
+  <div class="mb-8 border-l-8 border-gray-900 pl-6">
+    <h1 class="text-3xl font-black tracking-tighter text-gray-900 uppercase">Survival Report</h1>
+    <p class="text-xs font-bold text-gray-500 tracking-widest mt-1"><%= @selected_date %></p>
+  </div>
 
-  <div class="flex flex-col gap-6">
-    
-    <%# 実行ボタン %>
-    <div>
-      <%= button_to "実行！", survival_logs_path(survival_log: { report_status: 1, reported_on: @selected_date }), 
-          method: :post, 
-          class: "w-full py-8 text-2xl font-bold text-white bg-teal-500 hover:bg-teal-600 rounded-2xl shadow-lg transition-all" %>
-    </div>
+  <div class="space-y-8">
+    <%# 実行ボタン（無骨なブロック体） %>
+    <%= button_to "実行", survival_logs_path(survival_log: { report_status: 1, reported_on: @selected_date }), 
+        method: :post, 
+        class: "w-full py-6 text-xl font-black text-white bg-gray-900 hover:bg-black transition tracking-widest uppercase" %>
 
-    <%# サボるフォーム %>
-    <div class="border-t pt-6">
+    <%# サボるフォーム（削ぎ落とされたインターフェース） %>
+    <div class="border-t-2 border-gray-900 pt-8">
       <%= form_with model: @survival_log, url: survival_logs_path, local: true do |f| %>
-        <%# カレンダーから受け取った日付をここで送る %>
         <%= f.hidden_field :reported_on, value: @selected_date %>
         <%= f.hidden_field :report_status, value: -1 %>
         
-        <%= f.submit "サボる", 
-            class: "w-full py-8 text-2xl font-bold text-white bg-red-400 hover:bg-red-500 rounded-2xl shadow-lg transition-all cursor-pointer" %>
-
-        <div class="mt-6 border border-gray-100 p-5 rounded-xl bg-gray-50">
-          <p class="text-sm font-semibold text-gray-500 mb-3 text-center">言い訳を選択</p>
-          <div class="grid grid-cols-1 gap-2">
+        <div class="mb-6">
+          <p class="text-[10px] font-black text-gray-400 tracking-widest uppercase mb-4">選択：言い訳</p>
+          <div class="space-y-2">
             <% Excuse.all.each do |excuse| %>
-              <label class="flex items-center p-3 bg-white rounded-lg border cursor-pointer hover:border-red-300">
-                <%= f.radio_button :excuse_id, excuse.id, class: "mr-3" %>
-                <span class="text-gray-700"><%= excuse.name %></span>
+              <label class="flex items-center p-4 bg-white border-2 border-gray-200 cursor-pointer hover:border-gray-900 transition">
+                <%= f.radio_button :excuse_id, excuse.id, class: "appearance-none w-4 h-4 border-2 border-gray-400 checked:bg-gray-900 checked:border-gray-900 mr-4" %>
+                <span class="text-sm font-bold text-gray-700"><%= excuse.name %></span>
               </label>
             <% end %>
           </div>
         </div>
+
+        <%= f.submit "断念", 
+            class: "w-full py-4 text-sm font-black text-gray-500 border-2 border-gray-200 hover:bg-gray-900 hover:text-white hover:border-gray-900 transition tracking-widest uppercase cursor-pointer" %>
       <% end %>
     </div>
   </div>
 
-  <div class="mt-8 text-center">
-    <%= link_to "カレンダーに戻る", calendar_survival_logs_path, class: "text-gray-400 hover:text-gray-600 underline" %>
+  <div class="mt-12 text-center">
+    <%= link_to "戻る", calendar_survival_logs_path, class: "text-[10px] font-bold text-gray-400 hover:text-gray-900 underline uppercase tracking-widest" %>
   </div>
 </div>
