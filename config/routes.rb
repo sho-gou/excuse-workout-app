@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   post "users", to: "users#create"
 
   # セッション管理（ログイン処理・ログアウト）
-  get 'login', to: 'user_sessions#new'
+  get "login", to: "user_sessions#new"
   post "login", to: "user_sessions#create"
   delete "logout", to: "user_sessions#destroy"
 
