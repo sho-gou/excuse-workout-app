@@ -1,0 +1,30 @@
+<%# app/views/survival_logs/_form.html.erb %>
+<%= form_with model: survival_log, class: "space-y-6" do |f| %>
+  
+  <%# ステータス選択（実行/断念） %>
+  <div>
+    <%= f.label :report_status, "REPORT STATUS", class: "block text-[10px] font-black text-gray-400 tracking-widest uppercase mb-2" %>
+    <div class="grid grid-cols-2 gap-4">
+      <%= f.radio_button :report_status, 1, class: "peer hidden" %>
+      <%= f.label :report_status_1, "実行", class: "block text-center border-2 border-gray-900 p-4 font-black cursor-pointer peer-checked:bg-gray-900 peer-checked:text-white transition" %>
+
+      <%= f.radio_button :report_status, 0, class: "peer hidden" %>
+      <%= f.label :report_status_0, "断念", class: "block text-center border-2 border-gray-900 p-4 font-black cursor-pointer peer-checked:bg-gray-900 peer-checked:text-white transition" %>
+    </div>
+  </div>
+
+  <%# 言い訳選択（ここをREPORT画面と同じデザインにする） %>
+  <div>
+    <%= f.label :excuse_id, "EXCUSE", class: "block text-[10px] font-black text-gray-400 tracking-widest uppercase mb-2" %>
+    <div class="space-y-2">
+      <%= f.collection_radio_buttons :excuse_id, Excuse.all, :id, :name do |b| %>
+        <div class="border-2 border-gray-900 p-4 hover:bg-gray-50 transition">
+          <%= b.radio_button %>
+          <%= b.label { b.text } %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <%= f.submit "RE-REPORT", class: "w-full py-4 bg-gray-900 text-white font-black tracking-widest uppercase hover:bg-black transition cursor-pointer" %>
+<% end %>

@@ -33,9 +33,9 @@
           
           <% if logged_in? %>
             <nav class="flex items-center gap-6">
-              <%= link_to "LOGS", root_path, class: "text-[10px] font-black text-gray-900 hover:underline tracking-widest uppercase" %>
+              <%= link_to "REPORT", root_path, class: "text-[10px] font-black text-gray-900 hover:underline tracking-widest uppercase" %>
               <%= link_to "CALENDAR", calendar_survival_logs_path, class: "text-[10px] font-black text-gray-900 hover:underline tracking-widest uppercase" %>
-              <%= link_to "PROFILE", profile_path, class: "text-[10px] font-black text-gray-900 hover:underline tracking-widest uppercase" %>
+              <%= link_to "MISSION SETTINGS", profile_path, class: "text-[10px] font-black text-gray-900 hover:underline tracking-widest uppercase" %>
               
               <%= link_to "LOGOUT", logout_path, data: { turbo_method: :delete }, 
                           class: "text-[10px] font-black text-white bg-gray-900 px-4 py-2 hover:bg-black transition tracking-widest uppercase" %>
