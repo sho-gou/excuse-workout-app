@@ -13,10 +13,12 @@ services:
     # ここに ports を追加します
     ports:
       - "3000:3000"
-    command: tail -f /dev/null
+    command: bundle exec rails server -b 0.0.0.0
     volumes:
       - .:/myapp
     environment:
+      RAILS_ENV: production
+      SECRET_KEY_BASE: "725d76df6bf88b9bfe41343bbe26e275241d331a6982f3df726b4b448d6dccf6f8fa31051b41a0403b5faf952701d1f305ebc7084d7047e857f8b9bb1b9425cd"
       TZ: Asia/Tokyo
       MYSQL_PASSWORD: password
       DB_HOST: db
