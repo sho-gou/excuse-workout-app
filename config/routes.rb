@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   resource :profile, only: %i[show edit update]
 
   # 生存ログ関連
-  resources :survival_logs, only: %i[index create destroy] do
+  resources :survival_logs, only: %i[index create edit update destroy] do
     collection do
       get :calendar
     end

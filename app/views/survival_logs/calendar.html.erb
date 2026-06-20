@@ -11,9 +11,13 @@
     <div class="w-full bg-white border-2 border-gray-900 shadow-xl overflow-hidden">
       <%= month_calendar events: @survival_logs do |date, logs| %>
         
-        <div class="h-28 flex flex-col p-2 border border-gray-200 <%= date == Date.today ? 'bg-gray-50' : '' %>">
+        <%# group クラスを追加してホバー時のトリガーにする %>
+        <div class="group h-28 flex flex-col p-2 border border-gray-200 <%= date == Date.today ? 'bg-gray-50' : '' %>">
+          
+          <%# 【ここを修正】過去の未報告日を赤字で強調 %>
+          <% is_unfinished = (date < Date.today && logs.blank?) %>
           <%= link_to date.day, survival_logs_path(reported_on: date), 
-              class: "text-sm font-black text-gray-400 hover:text-gray-900 transition-colors" %>
+              class: "text-sm font-black transition-colors #{is_unfinished ? 'text-red-500 underline' : 'text-gray-400 hover:text-gray-900'}" %>
           
           <div class="w-full flex flex-col space-y-1 mt-2">
             <% logs.each do |log| %>
@@ -21,7 +25,13 @@
                           <%= log.report_status.to_i == 1 ? 'bg-gray-900 text-white' : 'border border-gray-900 text-gray-900' %>">
                 <%= log.report_status.to_i == 1 ? "実行" : "断念" %>
               </div>
-              
+
+              <%# ホバー時のみ表示される編集・削除ボタン %>
+              <div class="flex gap-2 justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                <%= link_to "✎", edit_survival_log_path(log), class: "text-gray-400 hover:text-blue-500" %>
+                <%= button_to "×", survival_log_path(log), method: :delete, data: { confirm: "削除しますか？" }, class: "text-gray-400 hover:text-red-500 bg-transparent border-0 p-0 cursor-pointer" %>
+              </div>
+
               <% if log.excuse.present? %>
                 <div class="text-[8px] text-gray-500 truncate italic tracking-tight text-center">
                   <%= log.excuse.name %>
@@ -35,7 +45,7 @@
 
     <%# 戻るリンク %>
     <div class="mt-8 text-center">
-      <%= link_to "ログ一覧へ戻る", survival_logs_path, class: "text-[10px] font-bold text-gray-400 hover:text-gray-900 underline uppercase tracking-widest" %>
+      <%= link_to "REPORTへ", survival_logs_path, class: "text-[10px] font-bold text-gray-400 hover:text-gray-900 underline uppercase tracking-widest" %>
     </div>
   </div>
 </div>
